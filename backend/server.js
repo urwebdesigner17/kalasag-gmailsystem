@@ -298,14 +298,9 @@ app.post('/api/mark-unread', async (req, res) => {
   }
 });
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'));
-});
-
-// OR if that still throws an error, try:
-app.get('/{/*splat}', (req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'));
-});
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log('Backend running on port ${PORT}'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
+});
