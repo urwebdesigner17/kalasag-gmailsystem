@@ -301,6 +301,6 @@ app.post('/api/mark-unread', async (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log('Backend running on port ${PORT}'));
 
-app.get('*', (req, res) => {
+app.get(/^(?!\/api).+/, (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
