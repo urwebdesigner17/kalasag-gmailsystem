@@ -299,13 +299,19 @@ app.post('/api/mark-unread', async (req, res) => {
   }
 });
 
-// 1. Define the "Catch-All" route FIRST
+/// 1. Define where the React "build" folder is located
+const buildPath = path.join(__dirname, '..', 'build');
+
+// 2. Tell Express to serve those static files
+app.use(express.static(buildPath));
+
+// 3. The "Catch-All" route to serve index.html for React routing
 app.get(/^(?!\/api).+/, (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
-// 2. Start the server LAST
-const PORT = process.env.PORT || 5000;
+// 4. Start the server (Always last!)
+const PORT = process.env.PORT || 10000; // Render likes 10000
 app.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`); // Use backticks here!
+  console.log(`Backend running on port ${PORT}`);
 });
