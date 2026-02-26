@@ -299,9 +299,13 @@ app.post('/api/mark-unread', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log('Backend running on port ${PORT}'));
-
+// 1. Define the "Catch-All" route FIRST
 app.get(/^(?!\/api).+/, (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
+});
+
+// 2. Start the server LAST
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Backend running on port ${PORT}`); // Use backticks here!
 });
